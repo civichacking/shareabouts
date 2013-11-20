@@ -30,7 +30,7 @@ map:
 # The keys show up in the dropdown list when you are adding a new place
 # The values map the place type to map icons (defined below).
 place_types:
-  Organization/Community:
+  OrganizationCommunity:
     label: _(Organization/Community)
     rules:
       - condition: '"{{location_type}}" === "OrganizationCommunity"'
@@ -68,7 +68,7 @@ place_types:
           opacity: 0.9
           fillOpacity: 0.4
 
-  Community Asset/Valued Landmark:
+  CommunityAssetValuedLandmark:
     label: _(Community Asset/Valued Landmark)
     rules:
       - condition: '"{{location_type}}" === "CommunityAssetValuedLandmark"'
@@ -104,7 +104,7 @@ place_types:
         #   opacity: 0.9
         #   fillOpacity: 0.4
 
-  Need/Vulnerability:
+  NeedVulnerability:
     label: _(Need/Vulnerability)
     rules:
       - condition: '"{{location_type}}" === "NeedVulnerability"'
@@ -142,7 +142,7 @@ place_types:
           opacity: 0.9
           fillOpacity: 0.4
 
-  Assistance Request:
+  AssistanceRequest:
     label: _(Assistance Request)
     rules:
       - condition: '"{{location_type}}" === "AssistanceRequest" && {{submission_sets.comments.length}} > 0'
@@ -329,7 +329,7 @@ place:
           value: 30
     - prompt: _(Email)
       type: text
-      name: submitter_email
+      name: private-submitter_email
       optional: true
       attrs:
         - key: placeholder
