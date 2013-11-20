@@ -31,7 +31,7 @@ map:
 # The values map the place type to map icons (defined below).
 place_types:
   Organization/Community:
-    label: _(Organization or Community)
+    label: _(Organization/Community)
     rules:
       - condition: '"{{location_type}}" === "OrganizationCommunity"'
          # Show Organizations/Communities that are points as icons...
@@ -71,7 +71,7 @@ place_types:
   Community Asset/Valued Landmark:
     label: _(Community Asset/Valued Landmark)
     rules:
-      - condition: '"{{location_type}}" === "Community AssetValued Landmark"'
+      - condition: '"{{location_type}}" === "CommunityAssetValuedLandmark"'
         # Display Community Asset/Valued Landmark as icons
 
         icon:
@@ -145,7 +145,7 @@ place_types:
   Assistance Request:
     label: _(Assistance Request)
     rules:
-      - condition: '"{{location_type}}" === "Assistance Request" && {{submission_sets.comments.length}} > 0'
+      - condition: '"{{location_type}}" === "AssistanceRequest" && {{submission_sets.comments.length}} > 0'
         # Display Assistance Requests as circles
 
         # icon:
@@ -177,7 +177,7 @@ place_types:
           weight: 4
           opacity: 0.9
           fillOpacity: 0.4
-      - condition: '"{{location_type}}" === "Assistance Request"'
+      - condition: '"{{location_type}}" === "AssistanceRequest"'
         style:
           color: '#f95016'
           radius: 8
@@ -271,14 +271,14 @@ place:
         - label: _(Organization/Community)
           value: OrganizationCommunity
         - label: _(Community Asset/Valued Landmark)
-          value: Community AssetValued Landmark
+          value: CommunityAssetValuedLandmark
         - label: _(Need/Vulnerability)
           value: NeedVulnerability
         - label: _(Assistance Request)
-          value: Assistance Request
+          value: AssistanceRequest
         - label: _(Miscellaneous)
           value: Miscellaneous
-      name: input_type
+      name: location_type
 
     - prompt: _(Topic Focus)
       type: select
