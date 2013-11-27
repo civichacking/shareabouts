@@ -1,95 +1,434 @@
-Shareabouts [![Build Status](https://secure.travis-ci.org/openplans/shareabouts.png)](http://travis-ci.org/openplans/shareabouts)
-===========
+Step 0.1: Setup Student Computer
+------------------------
 
-Shareabouts is an online mapping tool to gather crowdsourced public input in a social and engaging process. Using Shareabouts, people can drop a pin on a map to provide ideas, suggestions, and comments for planning and design issues. And as a mobile-friendly application, Shareabouts makes it easy to add input on the go.
+[Shareabouts Readme](https://github.com/civichacking/shareabouts/shareabouts-README.md)
 
-Features
--------------
-<dl>
-  <dt>Add New Places</dt>
-  <dd>Adding places is easy. The simple interface lets users quickly drop pins on the map with descriptions and other useful information.</dd>
+Not all students computers are ready to run python.
 
-  <dt>Comment on Places</dt>
-  <dd>Engage your audience in meaningful conversation. Users can leave [rich media] comments on places.</dd>
+MAC
+Install Command Line tools: [https://developer.apple.com/downloads/](https://developer.apple.com/downloads/)
+If Snow Leopard, [https://github.com/kennethreitz/osx-gcc-installer/downloads](https://github.com/kennethreitz/osx-gcc-installer/downloads)
 
-  <dt>Explore Places and Comments</dt>
-  <dd>The map allows users to find places and comments in their areas of interest.</dd>
+Homebrew, useful for cleanup
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
 
-  <dt>Show Support</dt>
-  <dd>Need to know which places are most popular? Users can vote for their favorite places to show their support.</dd>
+Step 0.2: Local Installation
+------------------------
 
-  <dt>Social Sharing</dt>
-  <dd>Harness the power of viral marketing. Users engage their social network when they share places on Twitter and Facebook.</dd>
+  easy_install pip
+  pip install virtualenv
 
-  <dt>Activity Feed</dt>
-  <dd>See a list of recently submitted places, comments, and support.</dd>
 
-  <dt>Place Types</dt>
-  <dd>Collect information about different types of places.  Data filtering by place type.</dd>
+  virtualenv env
+  source env/bin/activate
+  pip install -r requirements.txt
 
-  <dt>Responsive Design</dt>
-  <dd>We've designed Shareabouts to work great and look beautiful on all screen sizes—desktop, mobile, and touch screens!</dd>
 
-  <dt>Configurable Surveys</dt>
-  <dd>Want to collect specific information? Our flexible data storage allows you to create your own surveys. Crowdsource more than just comments.</dd>
+  source env/bin/activate
+  src/manage.py runserver
 
-  <dt>Custom Map Layers</dt>
-  <dd>Overlay pertinent geographic data. Applying your custom style rules, the Shareabouts map can pull in your GeoJson URLs as additional map layers.</dd>
 
-  <dt>Internationalization</dt>
-  <dd>Do your users speak various languages? Shareabouts is internationalizable. It's easy to customize the user interface with locale-specific translations.</dd>
-</dl>
+  Shareabouts at: [http://localhost:8000/](http://localhost:8000/)
 
-Documentation
--------------
-All of our documentation is is our `doc` directory. Use it to learn more about:
-* [the architecture](https://github.com/openplans/shareabouts/blob/master/doc/ARCHITECTURE.md)
-* [local setup](https://github.com/openplans/shareabouts/blob/master/doc/README.md)
-* [testing the source](https://github.com/openplans/shareabouts/blob/master/doc/TESTING.md)
-* [interface configuration](https://github.com/openplans/shareabouts/blob/master/doc/CONFIG.md)
-* [custom themes](https://github.com/openplans/shareabouts/blob/master/doc/CUSTOM_THEME.md)
-* [how to deploy](https://github.com/openplans/shareabouts/blob/master/doc/DEPLOY.md)
-* [upgrading from an older version](https://github.com/openplans/shareabouts/blob/master/doc/UPGRADE.md)
+Step 0: Create a Dataset
+------------------------
 
-Where is Sharabouts going? Check [our roadmap](https://github.com/openplans/shareabouts/wiki/Roadmap) for details of possble future features we've identified.
+If you're using the OpenPlans API server, it's
+[api.shareabouts.org](http://api.shareabouts.org) and the API manager is
+[api.shareabouts.org/manage](http://api.shareabouts.org/manage).
 
-Problems? Ideas? Let us know!
---------------------
+Step 1: Create a flavor
+-----------------------
 
-We strongly welcome your feature suggestions. [Create an issue](https://github.com/openplans/shareabouts/issues) on this GitHub repo, and help us with prioritizing by commenting on the features you'd like to see.
+A "flavor" is a particular configuration of Shareabouts.
 
-If you have questions for the development team,
-* [the developer discussion list](http://groups.google.com/group/shareabouts-dev) is a good starting point for troubleshooting or questions
-* you'll find the Shareabouts team in #shareabouts on [irc.freenode.net](http://irc.freenode.net).
-* hit us up on Twitter [@Shareabouts](http://twitter.com/shareabouts)
+Copy the *flavors/default_config* folder to a new subdirectory
+of *flavors/*.  Name it whatever you want.
 
-You can always contact OpenPlans directly [via our website](http://openplans.org).
 
-Demos
-------------
-* [gathering usage data for a city park](http://sistercities.shareabouts.org/)
-* [mapping ATM surcharges](http://nosur.shareabouts.org/)
-* [surveying bike commuters about parking at stations](http://bikeparking.shareabouts.org/)
-* [tracking and describing community assets](http://communitymap.shareabouts.org/)
+Step 2: Set up your local settings
+-----------------------
 
-Contributing
-------------
-In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
+Copy the *project/local_settings.py.template* file to
+*project/local_settings.py*.
 
-Here are some ways *you* can contribute:
+Edit the new file, changing SHAREABOUTS_FLAVOR to the name of the flavor directory you just
+created.
 
-* by joining our developers discussion list: http://groups.google.com/group/shareabouts-dev
-* by taking a look at our pipeline in the public tracker: https://www.pivotaltracker.com/projects/398973
-* by using alpha, beta, and prerelease versions
-* by reporting bugs
-* by suggesting new features
-* by writing or editing documentation
-* by writing specifications
-* by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
-* by refactoring code
-* by resolving issues
-* by reviewing patches
+Also update DATASET_ROOT, and DATASET_KEY. Get this info from your API server.
 
-Credits
--------------
-Shareabouts is a project of [OpenPlans](http://openplans.org).
+
+Step 3: Edit your flavor
+-----------------------
+
+Your flavor directory contains a *config.yml* file that you will be
+editing throughout the rest of these instructions. Once you're done with config and local testing,
+[deploy](https://github.com/openplans/shareabouts/blob/master/doc/DEPLOY.md).
+
+### The Map
+
+The map options are for initial map setup and match the [Leaflet Map
+options](http://leaflet.cloudmade.com/reference.html#map-options).
+
+
+Option       |Type      |Default   |Description
+-------------|----------|----------|-----------
+`center`     |Object    |None      |Latitude and longitude for the initial center. eg. "lat: 39.9523524" and "lng: -75.1636075"
+`zoom`       |Integer   |None      |The initial zoom level.
+`minZoom`    |Integer   |None      |The minimum zoom level supported.
+`maxZoom`    |Integer   |None      |The maximum zoom level supported.
+`maxBounds`  |Array     |None      |Restricts the map area to this bounding box, an array of arrays defining the southwest corner and the northeast corner. ie. `[ [swLat, swLng], [neLat, neLng] ]` or `[ [39.786, -75.463], [40.118, -74.864] ]`
+
+### Base Layer Options
+
+The base_layer value configures a single
+[TileLayer](http://leaflet.cloudmade.com/reference.html#tilelayer) as the base
+layer for the map. This section is completely optional and defaults to MapBox
+Streets tiles based on OpenStreetMap. Common options are listed below, and all
+options are defined
+[here](http://leaflet.cloudmade.com/reference.html#tilelayer).
+
+Option         |Type      |Default   |Description
+---------------|----------|----------|-----------
+`url`          |String    |None      |The URL template to the tile server. eg. `http://{s}.somedomain.com/blabla/{z}/{x}/{y}.png`. See [this](http://leaflet.cloudmade.com/reference.html#url-template) description for details.
+`attribution`  |String    |None      |The string used to describe the layer data.
+
+### Extra Layer Options
+
+You can add additional overlays on top of your base layer. To do so,
+add to the "layers" array.  This array should match the configuration format
+for [Argo](https://github.com/openplans/argo/wiki/Configuration-Guide) layer
+options.
+
+A sample configuration for Argo layers can be found in the `overlays`
+flavor [config file](https://github.com/openplans/shareabouts/blob/master/src/flavors/overlays/config.yml#L24).
+The data used in that example can also be found in the flavor under the
+[*/static/layers/*](https://github.com/openplans/shareabouts/tree/master/src/flavors/overlays/static/layers)
+folder.
+
+
+### Place Types
+
+Shareabouts can handle multiple types of Place. To set up the types
+syou're interested in, edit config.yml and add an item to the
+place_types mapping, like so:
+
+    place_types:
+      Landmark:
+        default: blue
+        focused: red
+
+The name of this type is "Landmark", and we've identified by name two
+icon configurations to use when this place type is selected or not.
+These icons are configured in the separate place_type_icons section,
+like so:
+
+    place_type_icons:
+      blue:
+        iconUrl: /static/css/images/feature-point.png
+        iconSize:
+          width: 17
+          height: 18
+        iconAnchor:
+          x: 9
+          y: 9
+
+The properties of icons are as per the Leaflet docs, see http://leaflet.cloudmade.com/reference.html#icon
+But briefly:
+
+The *iconUrl* is relative to the root of the website. Put the corresponding
+image file in src/sa_web/static/css/images/.
+The iconSize you specify in config.yml should match that of the image.
+
+*iconAnchor* is measured in pixels, and specifies where relative to the
+map point the center of the icon is placed; useful for eg. place
+markers that look best sticking up from the point rather than centered
+on it.
+
+
+### Input forms
+
+Users can do basically three things with places:
+
+* Create one
+* Add some information to an existing one
+* Support or Like one
+
+All of this happens in the 'place' section of the config.yml file.
+
+#### Creating places
+
+The 'place' section of the config file starts like this:
+
+    place:
+      adding_supported: true
+      title: The title of the form.
+
+If adding_supported is set to false, users cannot add places, and can
+only comment on or support the places you provide.
+
+Next you can have any number of input widgets to appear on the place
+adding form. These go in the *items* subsection, under *place*.
+Each one looks like:
+
+    items:
+      - prompt: Your Name
+        type: text
+        name: submitter_name
+        optional: true
+        attrs:
+          - key: placeholder
+            value: Type Your Name Here
+          - key: size
+            value: 30
+
+The *prompt* is used to label the form. The *type*, *name*, and any
+*attrs* are used directly as HTML attributes.  This example would
+generate the following HTML:
+
+    <label for="place-submitter_name">Your Name (optional)</label>
+    <input id="place-submitter_name type="text"
+     name="submitter_name"
+	 size="30" placeholder="Type Your Name Here">
+
+The *optional* setting can be used to indicate optional items.
+* with `optional: true`, the user sees _(optional)_ added to the form
+label. The setting has no other effect.
+* with `optional:` omitted, users can leave form items blank, and will not see the _(optional)_ 
+label. You may prefer this if all your items are optional.
+
+To make an item required, use the `attr` section to set `key: required` and  `value: true`. We're using HTML5 validation, so browsers handle this differently 
+(or [not at all](http://caniuse.com/form-validation)).
+
+The *label* setting can also be used for a place item. It is used as the label
+for that input value when it is displayed in the place detail view after it
+has been saved.
+
+**NOTE** There are three special place input properties: `submitter_name`, `name`,
+and `location_type`. These are specially displayed on the place detail view and
+therefore ignore the *label* setting.
+
+##### Attaching images to places
+
+You can attach images to places by configuring an input of type `file`. The
+configuration should look like this:
+
+    items:
+      - inputfile_label: Add an Image
+        type: file
+        name: my_image
+        attrs:
+          - key: accept
+            value: image/*
+
+This will generate markup that looks similar to this:
+
+    <label for="place-my_image"></label>
+    <span class="fileinput-container ">
+      <span>Add an Image</span>
+      <input id="place-my_image" name="my_image" type="file" accept="image/*">
+    </span>
+
+You can restyle the image input by overriding the `.fileinput-container` class
+in `custom.css` in your flavor.
+
+**NOTE** This does not currently support multiple file inputs or inputs types
+other than images.
+
+**NOTE** All images are proportionally resized with a max size of 800 pixels and
+converted to JPEGs.
+
+##### Choosing a place type
+
+If you have only one *place type* (see above), you'll want to specify
+it as a hidden input named *location_type*, like so:
+
+    - type: hidden
+      name: location_type
+      attrs:
+        - key: value
+          value: <your place type name goes here>
+
+(Yes, it's odd that the names are inconsistent. Needs to be fixed;
+see https://www.pivotaltracker.com/story/show/35697987)
+
+If you have more than one place type, and want your users to be able to
+choose which type they're adding, then use a select input, like so:
+
+    - prompt: Location Type
+      type: select
+      options:
+        - Landmark
+        - Park
+        - School
+
+Once a Place has been created, users can click on it and see a form to
+add more information. There are two parts to this: a simple Support
+section, and a section with one or more inputs to add more info.  Both
+parts are configurable, see below.
+
+#### Survey Form Configuration
+
+The survey form is configured in the *survey* section.
+First you can configure display of existing submissions.
+The options you can set are:
+
+Option               | Type    | Description
+---------------------|---------|----------------
+submission_type      | string  | What type of submissions these are, eg. "comments"
+show_responses       | boolean | Whether previous submissions should be shown with the form.
+response_name        | string  | Label to use when displaying previous submissions.
+response_plural_name | string | Plural label for displaying previous submissions.
+ action_text         | string  | For example, "commented on"
+
+
+
+Next is the survey form itself.  This is much like the Place creation
+form described above.  You can supply an arbitrary number of form items.
+Here's an example:
+
+    # Survey form config
+    title: Leave a Comment
+    form_link_text: Leave a Comment
+    submit_btn_text: Comment
+    items:
+      - prompt: Comment
+        label: Comment
+        type: textarea
+        name: comment
+      - prompt: Your Name
+        type: text
+        name: submitter_name
+      - prompt: Your Email
+        type: text
+        name: private-submitter_email
+
+##### Collecting Private Data
+
+Sometimes you'll want to collect data from users that you don't want to make
+available to the world (e.g., users' email addresses). You can mark data that
+is meant to be private with a `private-` prefix. This data will be available
+to you through the Shareabouts admin interface, but will not be shown through
+in your map. See the section on [survey form configuration](#survey-form-configuration)
+for an example.
+
+#### Support Form Configuration
+
+This is a simple form with a single button, in the *support* section.
+The options you can set are:
+
+Option               | Type    | Description
+---------------------|---------|----------------
+submission_type      | string  | Name for a type of submission a "support" is saved as, eg. "support"
+submit_btn_txt       | string  | Text on the submit button itself.
+action_text          | string  | Past-tense verb for display in the activity view, eg. "supported"
+
+
+### Translating Interface Text
+
+The text in Shareabouts can be translated via the Django
+localization (translation) machinery.
+
+To mark text in your configuration (flavor) as available to be
+translated, wrap the text in `_(` and `)`.  For example, in the following
+snippet, `Button Label` will be available for translation, but `survey_type`
+will not:
+
+    label: _(Button Label)
+    type_name: survey_type
+
+You can also translate the content in your pages. Surround any text that you
+would like to be translatable with `{{#_}}` and `{{/_}}`. For example:
+
+    <h2>{{#_}}About{{/_}}</h2>
+
+To generate a translation template, run the following from your flavor
+directory:
+
+    <project_src_root>/manage.py flavormessages --locale en_US
+
+Do this for each language you want your map to be available in. For the
+locale, use a locale name as specified in Django's documentation:
+https://docs.djangoproject.com/en/dev/topics/i18n/#term-locale-name
+
+Once your messages files are generated, fill in any translations that should
+be made.  If you leave a translation blank, the original string will be used.
+
+To apply your translations, run the following from your flavor directory:
+
+    <project_src_root>/manage.py compilemessages
+
+That's it! The compilemessages task is run automatically for the DotCloud and
+Heroku deployments.
+
+### Choosing a Language
+
+By default, Shareabouts will try to infer the target user's language from their
+browser settings. If you would like them to be able to explicitly select the
+interface language, you can configure a language selector in the application's
+title bar.
+
+Specify the available languages by adding this section to your configuration:
+
+    languages:
+      - code: en
+        label: I Speak English
+
+      - code: es
+        label: Hablo Español
+
+      - code: hi
+        label: मैं हिंदी बोलते हैं
+
+The `code` should be one of the [ISO-639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes),
+and the `label` should be the string that you want to appear in the language
+selector drop-down menu. Note that the language labels should not be marked for
+translation, and should be written in the target language.
+
+Don't forget to [translate your interface text](#translating-interface-text)
+into each of your desired target languages.
+
+For more information on language codes, see the [Django documentation](https://docs.djangoproject.com/en/1.3/topics/i18n/#term-language-code).
+
+### Pages and Links
+
+Shareabouts allows you to create multiple static pages, linked from
+the top navigation bar. To create a page:
+
+* To add a page to the navigaton bar, first add a *title*, and *slug*
+  to the "pages" array in config.yml.  For example:
+
+        - title: About
+          slug: about
+      	  start_page: true
+
+  The *start_page* option allows specifying that this page should be
+  open when people first visit the site. If omitted, it defaults to false.
+
+* Create the page content (as HTML). Shareabouts will look for your content
+  in a file in your flavor called *jstemplates/pages/about.html*. The filename
+  matches the slug by default. If you want to use a different name for your
+  page file, you can specify a *name* attribute as well, e.g.:
+
+        - title: About
+          slug: about
+          name: new
+      	  start_page: true
+
+  In this example, your file will be found at *jstemplates/pages/new.html*.
+
+You can also add links to external sites to the navigation bar.  To do
+this, simply add a title and url to the "pages" array in config.yml, and
+set the "external" property to "true".  For example:
+
+    - title: OpenPlans
+      url: http://www.openplans.org/
+      external: true
+
+**NOTE** Do not include `<script>` tags in your pages. If you want to do custom
+  scripting from within your flavor, add your scripts to the includes template
+  (_templates/includes.html_).
+
+### Styling
+
+See [Customizing the Theme](CUSTOM_THEME.md)
